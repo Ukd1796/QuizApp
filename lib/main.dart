@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
+import './question.dart';
+import './answer.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _MyAppState();
   }
+} // this widget gets rebuild
 
-}// this widget gets rebuild
-class _MyAppState extends State<MyApp> { // this stays persistent
+class _MyAppState extends State<MyApp> {
+  // this stays persistent
   var _questionIndex = 0;
   void _answerQuestion() {
     setState(() {
-         _questionIndex = _questionIndex + 1;
+      _questionIndex = _questionIndex + 1;
     }); // this basically tell dart when to change the state and helps in executing build widget again
     print("Answer Chosen");
   }
@@ -32,27 +34,14 @@ class _MyAppState extends State<MyApp> { // this stays persistent
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('My First App'),
+          title: Text('Quiz App'),
         ),
         body: Column(children: [
-          Text(questions[_questionIndex]),
-          RaisedButton(
-            child: Text('Answer 1'),
-            onPressed:
-                _answerQuestion, // this passes a pointer to function and only to be executed when the user presses the button
-          ),
-          RaisedButton(
-            child: Text('Answer 2'),
-            onPressed: _answerQuestion,
-          ),
-          RaisedButton(
-            child: Text('Answer 3'),
-            onPressed: _answerQuestion,
-          ),
-          RaisedButton(
-            child: Text('Answer 4'),
-            onPressed: _answerQuestion,
-          ),
+          Question(questions[_questionIndex]),
+          Answer(_answerQuestion),
+          Answer(_answerQuestion),
+          Answer(_answerQuestion),
+          Answer(_answerQuestion),
         ]),
       ),
     );
