@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './question.dart';
-import './answer.dart';
+import './quiz.dart';
+import './result.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,14 +23,11 @@ class _MyAppState extends State<MyApp> {
     }); // this basically tells dart when to change the state and helps in executing build widget again
 
     var aBool = true;
-    if(_questionIndex<questions.length)
-    {
-        
-    }
+    if (_questionIndex <_questions.length) {}
     print("Answer Chosen");
   }
 
-  final questions =const [
+  final  _questions = const [
     {
       'questionText': 'What is the full form of HTML?',
       'answers': ['ans1', 'ans2', 'ans3', 'ans4'],
@@ -48,14 +45,10 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('Quiz App'),
         ),
-        body: Column(children: [
-          Question(questions[_questionIndex]['questionText'].toString()),
-          ...(questions[_questionIndex]['answers'] as List<String>).map((answer) { // we add that to let dart know that we are accessing a list of string because dart cannot do it automatically
-            return Answer(_answerQuestion,answer);
-          }).toList() // converts the whole thing to a new list
-        ]),
+        body: _questionIndex < _questions.length
+            ? Quiz(answerQuestion:_answerQuestion,questionIndex:_questionIndex, questions:_questions)
+            : Result(),
       ),
     );
   }
 }
-
