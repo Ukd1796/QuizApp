@@ -20,14 +20,26 @@ class _MyAppState extends State<MyApp> {
   void _answerQuestion() {
     setState(() {
       _questionIndex = _questionIndex + 1;
-    }); // this basically tell dart when to change the state and helps in executing build widget again
+    }); // this basically tells dart when to change the state and helps in executing build widget again
+
+    var aBool = true;
+    if(_questionIndex<questions.length)
+    {
+        
+    }
     print("Answer Chosen");
   }
 
-  var questions = [
-    'What is the full form of HTML?',
-    'Wich of the following languages is the oldest language?',
-  ];
+  final questions =const [
+    {
+      'questionText': 'What is the full form of HTML?',
+      'answers': ['ans1', 'ans2', 'ans3', 'ans4'],
+    },
+    {
+      'questionText': 'Wich of the following languages is the oldest language?',
+      'answers': ['ans1', 'ans2', 'ans3', 'ans4'],
+    }
+  ]; // this is a map which consists of a key value pair
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +49,13 @@ class _MyAppState extends State<MyApp> {
           title: Text('Quiz App'),
         ),
         body: Column(children: [
-          Question(questions[_questionIndex]),
-          Answer(_answerQuestion),
-          Answer(_answerQuestion),
-          Answer(_answerQuestion),
-          Answer(_answerQuestion),
+          Question(questions[_questionIndex]['questionText'].toString()),
+          ...(questions[_questionIndex]['answers'] as List<String>).map((answer) { // we add that to let dart know that we are accessing a list of string because dart cannot do it automatically
+            return Answer(_answerQuestion,answer);
+          }).toList() // converts the whole thing to a new list
         ]),
       ),
     );
   }
 }
+
