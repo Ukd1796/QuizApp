@@ -17,24 +17,36 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // this stays persistent
   var _questionIndex = 0;
-  void _answerQuestion() {
+  var _totalScore = 0;
+  void _answerQuestion(int score) {
+    _totalScore = _totalScore + score;
     setState(() {
       _questionIndex = _questionIndex + 1;
     }); // this basically tells dart when to change the state and helps in executing build widget again
 
     var aBool = true;
-    if (_questionIndex <_questions.length) {}
+    if (_questionIndex < _questions.length) {}
     print("Answer Chosen");
   }
 
-  final  _questions = const [
+  final _questions = const [
     {
       'questionText': 'What is the full form of HTML?',
-      'answers': ['ans1', 'ans2', 'ans3', 'ans4'],
+      'answers': [
+        {'text': 'ans1', 'score': 10},
+        {'text': 'ans2', 'score': 5},
+        {'text': 'ans3', 'score': 3},
+        {'text': 'ans4', 'score': 1},
+      ],
     },
     {
       'questionText': 'Wich of the following languages is the oldest language?',
-      'answers': ['ans1', 'ans2', 'ans3', 'ans4'],
+      'answers': [
+        {'text': 'ans1', 'score': 10},
+        {'text': 'ans2', 'score': 5},
+        {'text': 'ans3', 'score': 3},
+        {'text': 'ans4', 'score': 1},
+      ],
     }
   ]; // this is a map which consists of a key value pair
 
@@ -46,8 +58,11 @@ class _MyAppState extends State<MyApp> {
           title: Text('Quiz App'),
         ),
         body: _questionIndex < _questions.length
-            ? Quiz(answerQuestion:_answerQuestion,questionIndex:_questionIndex, questions:_questions)
-            : Result(),
+            ? Quiz(
+                answerQuestion:_answerQuestion,
+                questionIndex: _questionIndex,
+                questions: _questions)
+            : Result(_totalScore),
       ),
     );
   }
